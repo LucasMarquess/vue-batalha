@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Matadores</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="panel scores">
+            <div class="score">
+                <h1>Jogador</h1>
+                <div class="life-bar">
+                    <div class="life" :style="{width: getPorcentagemVida(lifePlayer) + '%'}" v-bind:style=" getPorcentagemVida(lifePlayer) < 30 ? 'background-color: red' : false">
+                    </div>
+                </div>
+                <div>
+                    <p>{{getPorcentagemVida(lifePlayer)}}%</p>
+                </div>
+            </div>
+            <div class="score">
+                <h1>Mega Invasor</h1>
+                <div class="life-bar">
+                    <div class="life" :style="{width: getPorcentagemVida(lifeInvasor) + '%'}" v-bind:style=" getPorcentagemVida(lifeInvasor) < 30 ? 'background-color: red' : false">
+                    </div>
+                </div>
+                <div>
+                    <p>{{getPorcentagemVida(lifeInvasor)}}%</p>
+                </div>
+            </div>
+        </div>
+        <div class="panel result" v-if="isWin || isDefeat">
+            <div class="win" v-if="isWin">Você ganhou!!! :)</div>
+            <div class="lose" v-if="isDefeat">Você perdeu! :(</div>
+        </div>
+        <div class="panel buttons">
+            <template v-if="gameStarted">
+                <button class="btn attack" @click="ataque">Ataque</button>
+                <button class="btn especial-attack" @click="ataqueEspecial">Ataque Especial</button>
+                <button class="btn heal" @click="curar">Curar</button>
+                <button class="btn give-up" @click="iniciarOuDesistir">Desistir</button>
+            </template>
+            <button class="btn new-game" @click="iniciarOuDesistir" v-if="!gameStarted">Iniciar Jogo</button>
+        </div>
+        <div class="panel logs">
+            <ul>
+                <li v-for="log in logs" v-bind:class="log.class">
+                    {{log.texto}}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
